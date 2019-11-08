@@ -120,7 +120,7 @@ def get_video_url(vid_id, video_id):
     worked = False
     while(not worked):
         url = "https://services.packtpub.com/products-v1/products/{}/{}".format(vid_id, video_id)
-        data = requests.get(url, headers={'Authorization': 'Bearer ' + access_jwt})
+        data = sess.get(url, headers={'Authorization': 'Bearer ' + access_jwt})
         vid = json.loads(data.content)
         if ("message" in vid.keys()) and vid["message"] == "jwt expired":
             refresh()
@@ -133,7 +133,7 @@ def get_video_url(vid_id, video_id):
     
 def get_chapters(vid_id, limit_rate):
     url = 'https://static.packt-cdn.com/products/{}/summary'.format(vid_id)
-    data = requests.get(url)
+    data = sess.get(url)
     details = json.loads(data.content)
     
     if not ("title" in details.keys()):
@@ -143,7 +143,7 @@ def get_chapters(vid_id, limit_rate):
     os.makedirs(title, 0o755, exist_ok=True)
         
     url = 'https://static.packt-cdn.com/products/{}/toc'.format(vid_id)
-    data = requests.get(url)
+    data = sess.get(url)
     details = json.loads(data.content)
     
     if not ("chapters" in details.keys()):
@@ -166,7 +166,7 @@ def get_chapters(vid_id, limit_rate):
     
 def start_download(username, password, vid_id, limit_rate):
     login(username, password)
-    r = requests.get('https://services.packtpub.com/users-v1/users/me/metadata', headers={'Authorization': 'Bearer ' + access_jwt})
+    r = sess.get('https://services.packtpub.com/users-v1/users/me/metadata', headers={'Authorization': 'Bearer ' + access_jwt})
     metadata = json.loads(r.content)
     check_error(metadata)
     

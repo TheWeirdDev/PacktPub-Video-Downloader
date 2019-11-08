@@ -1,6 +1,6 @@
 # PVdl: PacktPub Video Downloader
 
-The Easiest way to download Packt videos
+The Easiest way to download any Packt video
 
 **Notice: You need a Packt account with subscription or free trial to download videos**
 

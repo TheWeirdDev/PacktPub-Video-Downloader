@@ -4,13 +4,21 @@ The Easiest way to download any Packt video
 
 **Notice: You need a Packt account with subscription or free trial to download videos**
 
+# Features
+
+* Download any video using your subscription
+* Resume downloads
+* Download rate limit
+* Easy to use
 
 # How to use
 
-Clone this repository, then run the script. For example:
+Clone this repository, install requirements and run the script. For example:
 
 ```bash
 chmod +x ./PVdl.py
+pip -r requirements.txt
+
 ./PVdl.py -u username@example.com -p Passw0rd -l "https://subscription.packtpub.com/video/programming/9781788834995"
 ```
 

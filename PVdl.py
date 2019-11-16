@@ -31,8 +31,12 @@ class bcolors:
 
 def check_error(j):
     if "errorCode" in j.keys():
-        print(bcolors.FAIL + "Error:", j['message'] + bcolors.ENDC)
-        exit(1)
+        print_err("Error:", j['message'])
+
+def print_err(err):
+    print(bcolors.FAIL , err , bcolors.ENDC)
+    exit(1)
+
         
 SYMBOLS = {
     'customary'     : ('B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'),
@@ -99,8 +103,7 @@ def download_url(url, output_path, limit_rate):
         #   urllib.request.urlretrieve(url, filename=output_path, reporthook=t.update_to)
         curl_limit_rate(url, output_path, limit_rate, desc)
     except (Exception, KeyboardInterrupt) as e:
-        print(e)
-        exit(1)
+        print_err(e)
         
 def refresh():
     global refresh_token
@@ -137,8 +140,8 @@ def get_video_url(vid_id, video_id):
             continue
         worked = True
     if not ("data" in vid.keys()):
-        print("Error: Can't get video url")
-        exit(0)
+        print_err("Error: Can't get video url")
+        
     return vid["data"]
     
 def get_chapters(vid_id, limit_rate):
@@ -147,8 +150,8 @@ def get_chapters(vid_id, limit_rate):
     details = json.loads(data.content)
     
     if not ("title" in details.keys()):
-        print("Error: Wrong link. No video found.")
-        exit(1)
+        print_err("Error: Wrong link. No video found.")
+        
     title = details["title"]
     title = re.sub("[<>|/\?*]", "_" ,title);
     os.makedirs(title, 0o755, exist_ok=True)
@@ -158,8 +161,7 @@ def get_chapters(vid_id, limit_rate):
     details = json.loads(data.content)
     
     if not ("chapters" in details.keys()):
-        print("Error: Wrong link. No video found.")
-        exit(1)
+        print_err("Error: Wrong link. No video found.")
         
     all_chapters = details['chapters']
     for x,i in enumerate(all_chapters):
@@ -190,8 +192,7 @@ def start_download(username, password, vid_id, limit_rate):
     
     subscription = metadata['subscription']
     if not (subscription['subscribed'] or subscription['freeTrial']):
-        print(bcolors.FAIL + "You don't have a valid subscription" + bcolors.ENDC)
-        exit(1)
+        print_err("You don't have a valid subscription")
     
     print(bcolors.OKGREEN + "You have a valid Subscription" + bcolors.ENDC)
     
@@ -222,8 +223,8 @@ if __name__ == "__main__":
             
         vid_id = re.findall(r"https://.*packtpub.*video/.*/(\d+)/?$", link)
         if len(vid_id) < 1:
-            print("Error: Invalid link")
-            exit(1)
+            print_err("Error: Invalid link")
+            
         vid_id = vid_id[0]
         start_download(username, password, vid_id, limit_rate)
     except KeyboardInterrupt:

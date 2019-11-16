@@ -19,9 +19,19 @@ access_jwt = ""
 refresh_token = ""
 sess = requests.Session();
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[1;31m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 def check_error(j):
     if "errorCode" in j.keys():
-        print("Error:", j['message'])
+        print(bcolors.FAIL + "Error:", j['message'] + bcolors.ENDC)
         exit(1)
         
 SYMBOLS = {
@@ -140,6 +150,7 @@ def get_chapters(vid_id, limit_rate):
         print("Error: Wrong link. No video found.")
         exit(1)
     title = details["title"]
+    title = re.sub("[<>|/\?*]", "_" ,title);
     os.makedirs(title, 0o755, exist_ok=True)
         
     url = 'https://static.packt-cdn.com/products/{}/toc'.format(vid_id)
@@ -150,14 +161,16 @@ def get_chapters(vid_id, limit_rate):
         print("Error: Wrong link. No video found.")
         exit(1)
         
-    print("Chapters found")
-    for x,i in enumerate(details['chapters']):
+    all_chapters = details['chapters']
+    for x,i in enumerate(all_chapters):
         section = i['title']
+        section = re.sub("[<>|/\?*]", "_" , section)
         s_path = "{}{}{:02}-{}".format(title, os.sep, x+1, section)
         os.makedirs(s_path, 0o755, exist_ok=True)
-        print(section)
+        print(bcolors.OKGREEN + "\nChapter {}/{}:".format(x+1, len(all_chapters)), section, "\n" + bcolors.ENDC)
         for y,c in enumerate(i['sections']):
             chapter = c['title']
+            chapter = re.sub("[<>|/\?*]", "_" , chapter)
             c_path = "{}{}{:02}-{}.mp4".format(s_path, os.sep , y+1, chapter)
             video_id = i['id'] + '/' + c['id']
             video_url = get_video_url(vid_id, video_id)
@@ -171,16 +184,16 @@ def start_download(username, password, vid_id, limit_rate):
     check_error(metadata)
     
     name = metadata['name']
-    print("Logged in as '{} {}'".format(name['firstName'], name['lastName']))
+    print(bcolors.HEADER + "Logged in as '{} {}'".format(name['firstName'], name['lastName']))
     print("mail: {}".format(metadata['mail']))
-    print("uuid: {}".format(metadata['uuid']))
+    print("uuid: {}".format(metadata['uuid'])+ bcolors.ENDC)
     
     subscription = metadata['subscription']
     if not (subscription['subscribed'] or subscription['freeTrial']):
-        print("You don't have a valid subscription")
+        print(bcolors.FAIL + "You don't have a valid subscription" + bcolors.ENDC)
         exit(1)
     
-    print("You have a valid Subscription")
+    print(bcolors.OKGREEN + "You have a valid Subscription" + bcolors.ENDC)
     
     get_chapters(vid_id, limit_rate)
     

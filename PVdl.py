@@ -31,10 +31,10 @@ class bcolors:
 
 def check_error(j):
     if "errorCode" in j.keys():
-        print_err("Error:", j['message'])
+        print_err("Error: " + j['message'])
 
 def print_err(err):
-    print(bcolors.FAIL , err , bcolors.ENDC)
+    print(bcolors.FAIL + str(err) + bcolors.ENDC)
     exit(1)
 
         

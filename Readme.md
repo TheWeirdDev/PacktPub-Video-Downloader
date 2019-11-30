@@ -17,7 +17,7 @@ Clone this repository, install requirements and run the script. For example:
 
 ```bash
 chmod +x ./PVdl.py
-pip -r requirements.txt
+pip --user install -r requirements.txt
 
 ./PVdl.py -u username@example.com -p Passw0rd -l "https://subscription.packtpub.com/video/programming/9781788834995"
 ```

@@ -1,4 +1,4 @@
-# PacktPub Video Downloader (PVdl)
+# PacktPub Video Downloader (pvdl)
 
 The Easiest way to download any Packt video tutorial
 
@@ -16,16 +16,24 @@ The Easiest way to download any Packt video tutorial
 Clone this repository, install requirements and run the script. For example:
 
 ```bash
-chmod +x ./PVdl.py
+chmod +x ./pvdl.py
 pip --user install -r requirements.txt
 
-./PVdl.py -u username@example.com -p Passw0rd -l "https://subscription.packtpub.com/video/programming/9781788834995"
+./pvdl.py -u username@example.com -p Passw0rd -l "https://subscription.packtpub.com/video/programming/9781788834995"
+```
+
+or install pvdl using pip:
+
+```bash
+pip --user install pvdl
+
+pvdl -u username@example.com -p Passw0rd -l "https://subscription.packtpub.com/video/programming/9781788834995"
 ```
 
 Usage:
 
 ```
-usage: PVdl.py [-h] [-u USERNAME] [-p PASSWORD] [-r RATE_LIMIT] [-l LINK]
+usage: pvdl.py [-h] [-u USERNAME] [-p PASSWORD] [-r RATE_LIMIT] [-l LINK]
 
 PacktPub Video Downloader
 

@@ -198,10 +198,9 @@ def start_download(username, password, vid_id, limit_rate):
     
     get_chapters(vid_id, limit_rate)
     
-
-if __name__ == "__main__":
+def main():
     try:
-        parser = argparse.ArgumentParser(description='PacktPub Video Downloader', prog="PVdl.py")
+        parser = argparse.ArgumentParser(description='PacktPub Video Downloader', prog="pvdl.py")
         required_args = parser.add_argument_group('required arguments')
         required_args.add_argument('-u', '--username', help='Your Packt Username')
         required_args.add_argument('-p', '--password', help='Your Password')
@@ -231,7 +230,8 @@ if __name__ == "__main__":
         print("Interrupted")
         exit(1)
     
-    
-    
-    
+
+if __name__ == "__main__":
+    main()
+
 

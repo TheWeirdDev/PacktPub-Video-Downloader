@@ -4,20 +4,27 @@ The Easiest way to download any Packt video tutorial
 
 **Notice: You need a Packt account with subscription or free trial to download videos**
 
-# Features
+## Features
 
 * Download any video using your subscription
 * Resume downloads
 * Download rate limit
 * Easy to use
 
-# How to use
+## How to use
+
+First you need to install the prerequisites. On Debian-based distributions run the following commands:
+
+```bash
+sudo apt update
+sudo apt install build-essential libcurl4-openssl-dev libssl-dev
+```
 
 Clone this repository, install requirements and run the script. For example:
 
 ```bash
 chmod +x ./pvdl.py
-pip --user install -r requirements.txt
+pip install --user -r requirements.txt
 
 ./pvdl.py -u username@example.com -p Passw0rd -l "https://subscription.packtpub.com/video/programming/9781788834995"
 ```
@@ -25,14 +32,14 @@ pip --user install -r requirements.txt
 or install pvdl using pip:
 
 ```bash
-pip --user install pvdl
+pip install --user pvdl
 
 pvdl -u username@example.com -p Passw0rd -l "https://subscription.packtpub.com/video/programming/9781788834995"
 ```
 
 Usage:
 
-```
+```bash
 usage: pvdl.py [-h] [-u USERNAME] [-p PASSWORD] [-r RATE_LIMIT] [-l LINK]
 
 PacktPub Video Downloader
@@ -51,7 +58,7 @@ required arguments:
 
 ```
 
-# License
+## License
 
 PacktPub Video Downloader is a free software and is licensed under GNU Public License v3+
 
